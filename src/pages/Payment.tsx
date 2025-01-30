@@ -89,6 +89,7 @@ const Payment = () => {
       <PixQRCodeDialog 
         open={showPixDialog} 
         onOpenChange={setShowPixDialog}
+        amount={amount}
       />
     </div>
   );
