@@ -1,11 +1,22 @@
 import { useState } from "react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Input } from "@/components/ui/input";
 import ProgressIndicator from "@/components/ProgressIndicator";
 import SecurityInfo from "@/components/SecurityInfo";
 import PixQRCodeDialog from "@/components/PixQRCodeDialog";
 
 const Payment = () => {
   const [showPixDialog, setShowPixDialog] = useState(false);
+  const [amount, setAmount] = useState("");
+
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Only allow numbers and one decimal point
+    const value = e.target.value.replace(/[^0-9.]/g, "");
+    const parts = value.split(".");
+    if (parts.length > 2) return;
+    if (parts[1]?.length > 2) return;
+    setAmount(value);
+  };
 
   return (
     <div className="max-w-md mx-auto p-6">
@@ -22,9 +33,29 @@ const Payment = () => {
             </RadioGroup>
             
             <div className="mt-6">
+              <label htmlFor="amount" className="block text-sm text-gray-600 mb-2">
+                Valor do pagamento
+              </label>
+              <div className="relative">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
+                  R$
+                </span>
+                <Input
+                  id="amount"
+                  type="text"
+                  value={amount}
+                  onChange={handleAmountChange}
+                  className="pl-8"
+                  placeholder="0,00"
+                />
+              </div>
+            </div>
+
+            <div className="mt-6">
               <button
-                className="w-full bg-primary text-white rounded-full py-3 font-medium hover:bg-primary/90 transition-colors"
+                className="w-full bg-primary text-white rounded-full py-3 font-medium hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 onClick={() => setShowPixDialog(true)}
+                disabled={!amount || parseFloat(amount) <= 0}
               >
                 Gerar pix
               </button>
