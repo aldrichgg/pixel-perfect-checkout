@@ -1,11 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import ProgressIndicator from './ProgressIndicator';
 import SecurityInfo from './SecurityInfo';
 
 const CheckoutForm = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="max-w-md mx-auto p-6">
-      <ProgressIndicator />
+      <ProgressIndicator currentStep={1} />
       <div className="mt-8">
         <h2 className="text-lg font-medium mb-6">Dados pessoais</h2>
         <form className="space-y-4">
@@ -38,6 +41,7 @@ const CheckoutForm = () => {
           <SecurityInfo />
           <button
             type="button"
+            onClick={() => navigate('/payment')}
             className="w-full bg-primary text-white rounded-full py-3 px-6 mt-6 flex items-center justify-center space-x-2 hover:bg-primary/90 transition-colors"
           >
             <span>Pagamento</span>
