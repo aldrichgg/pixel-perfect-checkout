@@ -1,8 +1,12 @@
+import { useState } from "react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import ProgressIndicator from "@/components/ProgressIndicator";
 import SecurityInfo from "@/components/SecurityInfo";
+import PixQRCodeDialog from "@/components/PixQRCodeDialog";
 
 const Payment = () => {
+  const [showPixDialog, setShowPixDialog] = useState(false);
+
   return (
     <div className="max-w-md mx-auto p-6">
       <ProgressIndicator currentStep={2} />
@@ -20,6 +24,7 @@ const Payment = () => {
             <div className="mt-6">
               <button
                 className="w-full bg-primary text-white rounded-full py-3 font-medium hover:bg-primary/90 transition-colors"
+                onClick={() => setShowPixDialog(true)}
               >
                 Gerar pix
               </button>
@@ -49,6 +54,11 @@ const Payment = () => {
           <SecurityInfo />
         </div>
       </div>
+
+      <PixQRCodeDialog 
+        open={showPixDialog} 
+        onOpenChange={setShowPixDialog}
+      />
     </div>
   );
 };
